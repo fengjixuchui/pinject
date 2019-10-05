@@ -1,4 +1,4 @@
-# linux-inject
+# Process Injector (pinject) `beta 01`
 **Tool for injecting a shared object into a Linux process**
 
 * Provides the Linux equivalent of using `CreateRemoteThread()` on Windows to inject a DLL into a running process
