@@ -41,7 +41,7 @@
 
 * In another terminal, inject sample-library.so into the target app:
 
-        ./inject -n sample-target sample-library.so
+        ./pinject -n sample-target sample-library.so
 
 *  The output should look something like this:
 
