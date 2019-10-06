@@ -105,7 +105,7 @@ int main(int argc, char** argv)
 
 	if(!libPath)
 	{
-		fprintf(stderr, "can't find file \"%s\"\n", libname);
+		fprintf(stderr, "[FATAL] Can't find file \"%s\"\n", libname);
 		return 1;
 	}
 
@@ -115,16 +115,16 @@ int main(int argc, char** argv)
 		target = findProcessByName(processName);
 		if(target == -1)
 		{
-			fprintf(stderr, "doesn't look like a process named \"%s\" is running right now\n", processName);
+			fprintf(stderr, "[FATAL] Doesn't look like a process named \"%s\" is running right now\n", processName);
 			return 1;
 		}
 
-		printf("targeting process \"%s\" with pid %d\n", processName, target);
+		printf("[***] Targeting process \"%s\" with pid %d\n", processName, target);
 	}
 	else if(!strcmp(command, "-p"))
 	{
 		target = atoi(commandArg);
-		printf("targeting process with pid %d\n", target);
+		printf("[***] Targeting process with pid %d\n", target);
 	}
 	else
 	{
@@ -221,7 +221,7 @@ int main(int argc, char** argv)
 	unsigned long targetBuf = malloc_regs.eax;
 	if(targetBuf == 0)
 	{
-		fprintf(stderr, "malloc() failed to allocate memory\n");
+		fprintf(stderr, "[FATAL] malloc() failed to allocate memory\n");
 		restoreStateAndDetach(target, addr, backup, injectSharedLibrary_size, oldregs);
 		free(backup);
 		free(newcode);
@@ -251,7 +251,7 @@ int main(int argc, char** argv)
 	// if eax is 0 here, then dlopen failed, and we should bail out cleanly.
 	if(libAddr == 0)
 	{
-		fprintf(stderr, "__libc_dlopen_mode() failed to load %s\n", libname);
+		fprintf(stderr, "[FATAL] __libc_dlopen_mode() failed to load %s\n", libname);
 		restoreStateAndDetach(target, addr, backup, injectSharedLibrary_size, oldregs);
 		free(backup);
 		free(newcode);
@@ -261,11 +261,11 @@ int main(int argc, char** argv)
 	// now check /proc/pid/maps to see whether injection was successful.
 	if(checkloaded(target, libname))
 	{
-		printf("\"%s\" successfully injected\n", libname);
+		printf("[OK] \"%s\" successfully injected\n", libname);
 	}
 	else
 	{
-		fprintf(stderr, "could not inject \"%s\"\n", libname);
+		fprintf(stderr, "[FATAL] Could not inject \"%s\"\n", libname);
 	}
 
 	// as a courtesy, free the buffer that we allocated inside the target
