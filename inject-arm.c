@@ -316,7 +316,7 @@ int main(int argc, char** argv)
 	// bail out cleanly.
 	if(libAddr == 0)
 	{
-		fprintf(stderr, "__libc_dlopen_mode() failed to load %s\n", libname);
+		fprintf(stderr, "[FATAL] __libc_dlopen_mode() failed to load %s\n", libname);
 		restoreStateAndDetach(target, addr, backup, injectSharedLibrary_size, oldregs);
 		free(backup);
 		free(newcode);
@@ -326,7 +326,7 @@ int main(int argc, char** argv)
 	// now check /proc/pid/maps to see whether injection was successful.
 	if(checkloaded(target, libname))
 	{
-		printf("[OK] \"%s\" Successfully injected\n", libname);
+		printf("[OK] \"%s\" successfully injected\n", libname);
 	}
 	else
 	{
