@@ -10,7 +10,7 @@
 
 void hello()
 {
-	printf("I just got loaded\n");
+	printf("I just got loaded!\n");
 }
 
 /*
